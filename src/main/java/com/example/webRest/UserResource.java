@@ -191,9 +191,9 @@ public class UserResource {
 
 
     @GetMapping("/token")
-    public ResponseEntity<String> getTokenWithAgora(String name)throws IOException  {
+    public ResponseEntity<String> getTokenWithAgora()throws IOException  {
 
-        log.info("REST request to  email : {}", name);
+        log.info("REST request to  email : {}", "test_token");
         String token=null;
         try {
              String appID = "cee295f7558f401fa703cf7d1df24098";
