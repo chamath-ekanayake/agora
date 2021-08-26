@@ -2,6 +2,7 @@ package com.example.webRest;
 
 
 import com.example.domain.DTOClass.DashBoardDTO;
+import com.example.domain.DTOClass.Token_GenerateDTO;
 import com.example.domain.User;
 import com.example.other.DynamicKey;
 import com.example.service.UserService;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -159,6 +161,7 @@ public class UserResource {
         {
             System.out.println(ex.getMessage());
         }
+        //Token_GenerateDTO
         return new ResponseEntity<>(DashBoard, HttpStatus.OK);
     }
 
@@ -189,26 +192,48 @@ public class UserResource {
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(userId, userId)).build();
         }
 
+//
+//    @GetMapping("/token")
+//    public ResponseEntity<String> getTokenWithAgora()throws IOException  {
+//
+//        log.info("REST request to  email : {}", "test_token");
+//        String token=null;
+//        try {
+//
+//
+//
+//        }
+//        catch (Exception ex){ex.getMessage();}
+//        return new ResponseEntity<String>(token, HttpStatus.OK);
+//    }
+
 
     @GetMapping("/token")
-    public ResponseEntity<String> getTokenWithAgora()throws IOException  {
-
-        log.info("REST request to  email : {}", "test_token");
+    public ResponseEntity<List<Token_GenerateDTO>> getTokenWithAgora () throws IOException {
+        List<Token_GenerateDTO> token_generateDTO = new ArrayList<>();
+        Token_GenerateDTO tokenDTO = new Token_GenerateDTO();
         String token=null;
         try {
-             String appID = "cee295f7558f401fa703cf7d1df24098";
-             String appCertificate = "92d380737fb64574979557f6eb128511";
-             String channel = "test2";
-             int ts = (int)(new Date().getTime()/1000);
-             int r = new Random().nextInt();
-             long uid = 2882341273L;
-             int expiredTs = 0;
-
-             token =   DynamicKey.generate(appID,appCertificate,channel,ts,r);
 
 
+            String appID = "cee295f7558f401fa703cf7d1df24098";
+            String appCertificate = "92d380737fb64574979557f6eb128511";
+            String channel = "test2";
+            int ts = (int)(new Date().getTime()/1000);
+            int r = new Random().nextInt();
+            long uid = 2882341273L;
+            int expiredTs = 0;
+
+            token =   DynamicKey.generate(appID,appCertificate,channel,ts,r);
+
+            tokenDTO.setAgora_token(token);
+            token_generateDTO.add(tokenDTO);
         }
-        catch (Exception ex){ex.getMessage();}
-        return new ResponseEntity<String>(token, HttpStatus.OK);
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        //Token_GenerateDTO
+        return new ResponseEntity<>(token_generateDTO, HttpStatus.OK);
     }
 }
