@@ -209,8 +209,8 @@ public class UserResource {
 
 
     @GetMapping("/token")
-    public ResponseEntity<List<Token_GenerateDTO>> getTokenWithAgora () throws IOException {
-        List<Token_GenerateDTO> token_generateDTO = new ArrayList<>();
+    public ResponseEntity<Token_GenerateDTO> getTokenWithAgora () throws IOException {
+     //   List<Token_GenerateDTO> token_generateDTO = new ArrayList<>();
         Token_GenerateDTO tokenDTO = new Token_GenerateDTO();
         String token=null;
         try {
@@ -227,13 +227,13 @@ public class UserResource {
             token =   DynamicKey.generate(appID,appCertificate,channel,ts,r);
 
             tokenDTO.setAgora_token(token);
-            token_generateDTO.add(tokenDTO);
+           // token_generateDTO.add(tokenDTO);
         }
         catch(Exception ex)
         {
             System.out.println(ex.getMessage());
         }
         //Token_GenerateDTO
-        return new ResponseEntity<>(token_generateDTO, HttpStatus.OK);
+        return new ResponseEntity<>(tokenDTO, HttpStatus.OK);
     }
 }
